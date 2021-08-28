@@ -1,10 +1,14 @@
-﻿@page "/contact/new"
+﻿@page "/contact/{Id}"
 @inject NavigationManager NavigationManager
 @inject IContactService ContactService
 
 <fieldset>
     <legend>Contact Details</legend>
-    <EditForm Model="@contact" OnValidSubmit="@HandleValidSubmit" class="form-i">
+    @if (message != null && message.Length > 0)
+    {
+        <div class="alert alert-danger">@message</div>
+    }
+    <EditForm Model="@contact" OnValidSubmit="@SaveContact" class="form-i">
         <DataAnnotationsValidator />
         <div class="form-row">
             <div class="col-4">
@@ -38,7 +42,7 @@
         <div class="row">
 
             <div class="col-8">
-                <div class="row">
+                <div class="form-row">
                     <div class="col-6">
                         <div class="form-group form-row">
                             <label for="Job Title" class="col-2 col-form-label">Job Title</label>
@@ -93,10 +97,12 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 right">
-                <input type="submit" class="btn btn-primary" value="Save" />
-                <input type="button" class="btn btn-secondary" @onclick="CancelAddContact" value="Cancel" />
+        <div class="form-row">
+            <div class="col-12">
+                <div class="float-right">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                    <input type="button" class="btn btn-secondary" @onclick='(() => NavigationManager.NavigateTo("/"))' value="Cancel" />
+                </div>
             </div>
         </div>
     </EditForm>
@@ -105,26 +111,41 @@
 </fieldset>
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
+
+
+
     private Contact contact = new Contact();
     protected string message = string.Empty;
-    // Save the Contact
-    private void HandleValidSubmit()
+
+    protected override async Task OnInitializedAsync()
     {
-        var result = ContactService.AddContact(contact);
-        if (result != null) {
-            message = "Contact was created successfully";
+        if (Id.ToUpper() == "NEW")
+        {
+            contact = new Contact();
         }
         else
         {
-            message = "There was a problem creating the contact";
+            contact = ContactService.GetContacts new Contact();
         }
-
-
-        Console.WriteLine("OnValidSubmit");
     }
 
-    private void CancelAddContact()
+    // Save the Contact
+    private async void SaveContact()
     {
-        NavigationManager.NavigateTo("/contacts");
+        try
+        {
+            var result = await ContactService.AddContact(contact);
+            if (result != null)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
+        catch (Exception e)
+        {
+            message = e.Message;
+        }
     }
+
 }

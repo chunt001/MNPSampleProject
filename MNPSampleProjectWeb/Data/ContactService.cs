@@ -19,14 +19,23 @@ namespace MNPSampleProjectWeb.Data
 
         public async Task<Contact> AddContact(Contact contact)
         {
-            var response = await httpClient.PostAsJsonAsync<Contact>("", contact);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var body = await response.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<Contact>(body, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-            }
+                throw new ApplicationException("There was an error savcing the contact");
+                var response = await httpClient.PostAsJsonAsync<Contact>("", contact);
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStreamAsync();
+                    return await JsonSerializer.DeserializeAsync<Contact>(body, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                }
 
-            return null;
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public async Task UpdateContact(Contact contact)
