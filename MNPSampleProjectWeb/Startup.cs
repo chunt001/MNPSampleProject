@@ -33,7 +33,7 @@ namespace MNPSampleProjectWeb
             // CONTACT SERVICE
             services.AddHttpClient<IContactService, ContactService>(client =>
             {
-                client.BaseAddress = new Uri(baseurl + "/Contacts");
+                client.BaseAddress = new Uri(baseurl + "/Contacts/");
             });
         }
 

@@ -21,16 +21,13 @@ namespace MNPSampleProjectWeb.Data
         {
             try
             {
-                throw new ApplicationException("There was an error savcing the contact");
                 var response = await httpClient.PostAsJsonAsync<Contact>("", contact);
                 if (response.IsSuccessStatusCode)
                 {
                     var body = await response.Content.ReadAsStreamAsync();
                     return await JsonSerializer.DeserializeAsync<Contact>(body, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                 }
-
                 return null;
-
             }
             catch (Exception e)
             {
@@ -40,7 +37,7 @@ namespace MNPSampleProjectWeb.Data
 
         public async Task UpdateContact(Contact contact)
         {
-            //var response = await httpClient.PutAsJsonAsync<Contact>("");
+            var response = await httpClient.PutAsJsonAsync<Contact>(contact.Id.ToString(), contact);
 
         }
         public async Task<Contact[]> GetContacts()
@@ -48,6 +45,19 @@ namespace MNPSampleProjectWeb.Data
             try
             {
                 var response = await httpClient.GetFromJsonAsync<Contact[]>("");
+                return response;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<Contact> GetContact(int Id)
+        {
+            try
+            {
+                var response = await httpClient.GetFromJsonAsync<Contact>(Id.ToString());
                 return response;
                 //if (response.IsError == false)
                 //{
@@ -64,5 +74,5 @@ namespace MNPSampleProjectWeb.Data
             }
         }
 
-    }
+}
 }

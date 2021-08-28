@@ -127,7 +127,15 @@
         }
         else
         {
-            contact = ContactService.GetContacts new Contact();
+            try
+            {
+                contact = await ContactService.GetContact(int.Parse(Id));
+
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+            }
         }
     }
 
@@ -136,10 +144,18 @@
     {
         try
         {
-            var result = await ContactService.AddContact(contact);
-            if (result != null)
+            if (Id.ToUpper() == "NEW")
             {
-                NavigationManager.NavigateTo("/");
+                var result = await ContactService.AddContact(contact);
+                if (result != null)
+                {
+                    NavigationManager.NavigateTo("/");
+                }
+            }
+            else
+            {
+                await ContactService.UpdateContact(contact);
+               NavigationManager.NavigateTo("/");
             }
         }
         catch (Exception e)
