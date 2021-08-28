@@ -1,0 +1,130 @@
+﻿@page "/contact/new"
+@inject NavigationManager NavigationManager
+@inject IContactService ContactService
+
+<fieldset>
+    <legend>Contact Details</legend>
+    <EditForm Model="@contact" OnValidSubmit="@HandleValidSubmit" class="form-i">
+        <DataAnnotationsValidator />
+        <div class="form-row">
+            <div class="col-4">
+                <div class="form-group form-row">
+                    <label for="Name" class="col-2 col-form-label">Name</label>
+                    <div class="col-10">
+                        <InputText @bind-Value="contact.Name" class="form-control" id="Name" />
+                        <ValidationMessage For="() => contact.Name" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group form-row">
+                    <label for="Address" class="col-2 col-form-label">Address</label>
+                    <div class="col-10">
+                        <InputText @bind-Value="contact.Address" class="form-control" id="Address" />
+                        <ValidationMessage For="() => contact.Address" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group form-row">
+                    <label for="DateLastContacted" class="col-4 col-form-label">Last Date Contacted</label>
+                    <div class="col-8">
+                        <InputDate @bind-Value="contact.LastContactedDate" class="form-control" id="DateLastContacted"></InputDate>
+                        <ValidationMessage For="() => contact.LastContactedDate" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group form-row">
+                            <label for="Job Title" class="col-2 col-form-label">Job Title</label>
+                            <div class="col-10">
+                                <InputText @bind-Value="contact.JobTitle" class="form-control" id="JobTitle" />
+                                <ValidationMessage For="() => contact.JobTitle" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group form-row">
+                            <label for="Phone" class="col-2 col-form-label">Phone</label>
+                            <div class="col-10">
+                                <InputText @bind-Value="contact.Phone" class="form-control" id="Phone" />
+                                <ValidationMessage For="() => contact.Phone" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group form-row">
+                            <label for="Company" class="col-2 col-form-label">Company</label>
+                            <div class="col-10">
+                                <InputSelect @bind-Value="contact.Company" class="form-control" id="Company">
+                                    <option value="">Select Company...</option>
+                                    <option value="Disney">Disney</option>
+                                    <option value="HP">HP</option>
+                                    <option value="Microsoft">Microsoft</option>
+                                    <option value="Google">Google</option>
+                                </InputSelect>
+                                <ValidationMessage For="() => contact.Company" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group form-row">
+                            <label for="Email" class="col-2 col-form-label">Email</label>
+                            <div class="col-10">
+                                <InputText @bind-Value="contact.Email" class="form-control" id="Email" />
+                                <ValidationMessage For="() => contact.Email" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 my-4">
+                <div class="form-group">
+                    <label for="Comments" class="col-lab">Comments</label>
+                    <InputTextArea @bind-Value="contact.Comments" class="form-control" id="Comments"></InputTextArea>
+                    <ValidationMessage For="() => contact.Comments" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 right">
+                <input type="submit" class="btn btn-primary" value="Save" />
+                <input type="button" class="btn btn-secondary" @onclick="CancelAddContact" value="Cancel" />
+            </div>
+        </div>
+    </EditForm>
+
+
+</fieldset>
+
+@code {
+    private Contact contact = new Contact();
+    protected string message = string.Empty;
+    // Save the Contact
+    private void HandleValidSubmit()
+    {
+        var result = ContactService.AddContact(contact);
+        if (result != null) {
+            message = "Contact was created successfully";
+        }
+        else
+        {
+            message = "There was a problem creating the contact";
+        }
+
+
+        Console.WriteLine("OnValidSubmit");
+    }
+
+    private void CancelAddContact()
+    {
+        NavigationManager.NavigateTo("/contacts");
+    }
+}
