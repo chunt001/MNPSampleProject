@@ -22,6 +22,7 @@ namespace MNPSampleProjectWeb.Data
         [Required]
         [Phone]
         public string Phone { get; set; }
+        [Required]
         public string Company { get; set; }
         [Required]
         [EmailAddress]
