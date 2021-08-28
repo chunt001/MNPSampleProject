@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MNPSampleProject.Model;
 
 namespace MNPSampleProject
 {
@@ -28,6 +30,11 @@ namespace MNPSampleProject
         {
 
             services.AddControllers();
+
+            // Contact DB Context for in Memory DB
+            services.AddDbContext<ContactDBContext>(opt =>
+                                              opt.UseInMemoryDatabase("Contact"));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MNPSampleProject", Version = "v1" });
