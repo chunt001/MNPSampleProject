@@ -22,14 +22,14 @@ namespace MNPSampleProject.Controllers
 
         // GET: api/Contacts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
+        public async Task<ActionResult<IEnumerable<Contacts>>> GetContacts()
         {
-            return await _context.Contacts.ToListAsync();
+             return _context.Contacts.ToList();
         }
 
         // GET: api/Contacts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Contact>> GetContact(int id)
+        public async Task<ActionResult<Contacts>> GetContact(int id)
         {
             var contact = await _context.Contacts.FindAsync(id);
 
@@ -44,7 +44,7 @@ namespace MNPSampleProject.Controllers
         // PUT: api/Contacts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContact(int id, Contact contact)
+        public async Task<IActionResult> PutContact(int id, Contacts contact)
         {
             if (id != contact.Id)
             {
@@ -75,7 +75,7 @@ namespace MNPSampleProject.Controllers
         // POST: api/Contacts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Contact>> PostContact(Contact contact)
+        public async Task<ActionResult<Contacts>> PostContact(Contacts contact)
         {
             _context.Contacts.Add(contact);
             await _context.SaveChangesAsync();

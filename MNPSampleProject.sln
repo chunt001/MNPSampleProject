@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNPSampleProject", "MNPSamp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNPSampleProjectWeb", "MNPSampleProjectWeb\MNPSampleProjectWeb.csproj", "{7AB7EA02-E839-4E42-A8E9-31506D4A908F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNPSampleProjectUnitTests", "MNPSampleProjectUnitTests\MNPSampleProjectUnitTests.csproj", "{38C970D9-3E6C-49F8-BAE0-D9786B39598B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7AB7EA02-E839-4E42-A8E9-31506D4A908F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB7EA02-E839-4E42-A8E9-31506D4A908F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AB7EA02-E839-4E42-A8E9-31506D4A908F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38C970D9-3E6C-49F8-BAE0-D9786B39598B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38C970D9-3E6C-49F8-BAE0-D9786B39598B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38C970D9-3E6C-49F8-BAE0-D9786B39598B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38C970D9-3E6C-49F8-BAE0-D9786B39598B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
