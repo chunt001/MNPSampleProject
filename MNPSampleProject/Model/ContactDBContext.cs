@@ -13,6 +13,6 @@ namespace MNPSampleProject.Model
         {
         }
 
-        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Contacts> Contacts { get; set; }
     }
 }

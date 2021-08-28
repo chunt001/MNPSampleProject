@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MNPSampleProject.Model
 {
-    public class Contact
+    public class Contacts
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -33,7 +33,10 @@ namespace MNPSampleProject
 
             // Contact DB Context for in Memory DB
             services.AddDbContext<ContactDBContext>(opt =>
-                                              opt.UseInMemoryDatabase("Contact"));
+                    opt.UseSqlServer(Configuration.GetConnectionString("ContactsDbConnection")));
+
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddSwaggerGen(c =>
             {
