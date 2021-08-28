@@ -28,7 +28,13 @@ namespace MNPSampleProjectWeb
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            string baseurl = "http://localhost:43028/api";
+            // CONTACT SERVICE
+            services.AddHttpClient<IContactService, ContactService>(client =>
+            {
+                client.BaseAddress = new Uri(baseurl + "/Contacts");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
