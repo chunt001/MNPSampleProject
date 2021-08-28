@@ -1,0 +1,55 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+@inject IContactService ContactService
+@using Radzen
+
+<div class="row">
+    <div class="col-6">
+        <h3>Contacts</h3>
+
+    </div>
+    <div class="col-6">
+        <button class="btn btn-primary float-right" @onclick='(() => NavigationManager.NavigateTo("/contact/new"))'>Create New Contact</button>
+    </div>
+</div>
+
+@if (contacts == null)
+{
+    <span>Loading contacts. Please wait...</span>
+}
+else
+{
+    <RadzenGrid Data="@contacts" Count="@contacts.Length" AllowSorting="true" AllowFiltering="false" AllowPaging="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" PageSize="25" TItem="Contact" ColumnWidth="150px">
+        <Columns>
+            <RadzenGridColumn TItem="Contact" Property="Name" Title="Name">
+                <Template>
+                    <a href="/contact/@context.Id">@context.Name</a>
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Contact" Property="Company" Title="Company" />
+            <RadzenGridColumn TItem="Contact" Property="Phone" Title="Phone">
+                <Template>
+                    <a href="tel:@context.Phone">@context.Phone</a>
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Contact" Property="Address" Title="Address" />
+            <RadzenGridColumn TItem="Contact" Property="Email" Title="Email">
+                <Template>
+                    <a href="mailto:@context.Email">@context.Email</a>
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Contact" Property="LastContactedDate" Title="Last Date Contacted" />
+        </Columns>
+    </RadzenGrid>
+}
+
+@code {
+
+    Contact[] contacts;
+    protected override async Task OnInitializedAsync()
+    {
+
+        // get the contacts list
+        contacts = await ContactService.GetContacts();
+    }
+}

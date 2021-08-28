@@ -7,6 +7,10 @@ namespace MNPSampleProjectWeb.Data
 {
     public interface IContactService
     {
-        Task<IEnumerable<Contact>> GetContacts();
+        Task<Contact[]> GetContacts();
+        Task<Contact> GetContact(int Id);
+        Task<Contact> AddContact(Contact contact);
+        Task UpdateContact(Contact contact);
+
     }
 }

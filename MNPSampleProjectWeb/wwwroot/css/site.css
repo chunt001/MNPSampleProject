@@ -48,3 +48,16 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+fieldset {
+    border: 1px solid silver;
+    box-sizing: border-box;
+    grid-area: 1 / 1; /* first row, first column */
+    padding: 20px;
+    width: inherit;
+}
+
+legend {
+    padding: 0 4px;
+    width: auto;
+}
