@@ -1,6 +1,7 @@
 ﻿@page "/contact/{Id}"
 @inject NavigationManager NavigationManager
 @inject IContactService ContactService
+@inject IJSRuntime JsRuntime
 
 <fieldset>
     <legend>Contact Details</legend>
@@ -121,6 +122,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+
+
+
         if (Id.ToUpper() == "NEW")
         {
             contact = new Contact();
@@ -144,18 +148,24 @@
     {
         try
         {
-            if (Id.ToUpper() == "NEW")
+            // I would not normally use this type of dialog but it gets the job done
+            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to save this contact?");
+            if (confirmed)
             {
-                var result = await ContactService.AddContact(contact);
-                if (result != null)
+                // Delete!
+                if (Id.ToUpper() == "NEW")
                 {
+                    var result = await ContactService.AddContact(contact);
+                    if (result != null)
+                    {
+                        NavigationManager.NavigateTo("/");
+                    }
+                }
+                else
+                {
+                    await ContactService.UpdateContact(contact);
                     NavigationManager.NavigateTo("/");
                 }
-            }
-            else
-            {
-                await ContactService.UpdateContact(contact);
-               NavigationManager.NavigateTo("/");
             }
         }
         catch (Exception e)
